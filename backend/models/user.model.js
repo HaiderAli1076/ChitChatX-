@@ -242,20 +242,17 @@ const userSchema = new mongoose.Schema(
 // ========================================
 // PASSWORD HASHING
 // ========================================
-
-userSchema.pre("save", async function (next) {
+userSchema.pre("save", async function () {
     // Don't hash password if password hasn't changed
     if (!this.isModified("password")) {
-        return next();
+        return;
     }
 
     // Hash password
     this.password = await bcrypt.hash(this.password, 12);
-
-    next();
 });
 
-// ========================================
+//=================================
 // PASSWORD COMPARISON
 // ========================================
 
